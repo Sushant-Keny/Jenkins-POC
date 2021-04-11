@@ -40,4 +40,11 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            mail to: 'sushant.keny@gmail.com',
+            subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
+            body: "Your build completed, please check: ${env.BUILD_URL}"
+        }
+    }
 }
