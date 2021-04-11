@@ -21,6 +21,16 @@ pipeline {
                 sh 'npm run lint'
             }
         }
+        stage('Code Coverage') {
+            steps {
+                sh 'npm run test:cov'
+                publishHTML(target: [
+                    reportDir: './coverage/lcov-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Jest Coverage Report'
+                ])
+            }
+        }
         stage('Test') {
             steps {
                 sh 'npm run test'
