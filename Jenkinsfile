@@ -1,43 +1,50 @@
 pipeline {
     agent any
     triggers {
-        pollSCM('* * * * *')
+        pollSCM("* * * * *")
     }
     stages {
-        stage('Install') {
+        stage("Install") {
             steps {
-                sh 'npm install'
+                sh "npm install"
             }
         }
-        stage('Build') {
+        stage("Build") {
             steps {
-                sh 'npm run build'
+                sh "npm run build"
             }
         }
-        stage('Format') {
+        stage("Format") {
             steps {
-                sh 'npm run format'
+                sh "npm run format"
             }
         }
-        stage('Lint') {
+        stage("Lint") {
             steps {
-                sh 'npm run lint'
+                sh "npm run lint"
             }
         }
-        stage('Code Coverage') {
+        stage("Code Coverage") {
             steps {
-                sh 'npm run test:cov'
+                sh "npm run test:cov"
                 publishHTML(target: [
-                    reportDir: './coverage/lcov-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Jest Coverage Report'
+                    reportDir: "./coverage/lcov-report",
+                    reportFiles: "index.html",
+                    reportName: "Jest Coverage Report"
                 ])
             }
         }
-        stage('Test') {
+        stage("Test") {
             steps {
-                sh 'npm run test'
+                sh "npm run test"
             }
+        }
+    }
+    post {
+        always {
+            mail to: "sushant.keny@gmail.com",
+            subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
+            body: "Your build is completed, please check: ${env.BUILD_URL}"
         }
     }
 }
