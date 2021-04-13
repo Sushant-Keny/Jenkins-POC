@@ -39,6 +39,11 @@ pipeline {
                 sh "npm run test"
             }
         }
+        stage("Docker Build") {
+            steps {
+                sh "docker build -t kenysushant/calculator ."
+            }
+        }
     }
     post {
         always {
