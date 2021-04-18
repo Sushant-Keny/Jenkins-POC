@@ -9,6 +9,7 @@ export class AppService {
   }
   
   getHello(): string {
+    this.logger.log('Hello World! from App Service');
     return 'Hello World!';
   }
 }
