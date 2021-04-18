@@ -9,7 +9,8 @@ export class AppService {
   }
   
   getHello(): string {
-    console.log('Hello World! from App Service');
+    throw new Error('There is a problem!');
+    this.logger.log('Hello World! from App Service');
     return 'Hello World!';
   }
 }
